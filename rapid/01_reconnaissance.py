@@ -2,35 +2,28 @@
 Rapid Security Assessment
 Module 01: Reconnaissance
 
-Purpose:
-    Structure and summarize reconnaissance findings from an
-    authorized security assessment.
+This module records the services identified during the initial
+reconnaissance stage of the Rapid assessment.
 
-Source:
-    Sanitized from the Rapid assessment documentation.
-
-Note:
-    Target-specific IP addresses, credentials, flags, private keys,
-    and other sensitive engagement information have been removed.
+The original assessment contained target-specific information.
+This public version has been sanitized before publication.
 """
 
 
-def summarize_reconnaissance():
-    """
-    Summarize the services identified during initial reconnaissance.
-    """
+def get_reconnaissance_findings():
+    """Return the services identified during reconnaissance."""
 
     findings = {
         "22/tcp": {
             "service": "SSH",
             "state": "open",
-            "observation": "SSH service detected during reconnaissance.",
+            "observation": "SSH service was identified during reconnaissance.",
         },
         "2121/tcp": {
             "service": "FTP",
             "state": "open",
             "observation": (
-                "FTP service detected; anonymous authentication "
+                "FTP was identified and anonymous authentication "
                 "was reported as permitted."
             ),
         },
@@ -40,22 +33,24 @@ def summarize_reconnaissance():
 
 
 def display_findings(findings):
-    """Display reconnaissance findings in a readable format."""
+    """Print the reconnaissance results in a readable format."""
 
-    print("=" * 60)
+    print("\n" + "=" * 60)
     print("RAPID SECURITY ASSESSMENT")
-    print("MODULE 01: RECONNAISSANCE")
+    print("MODULE 01 — RECONNAISSANCE")
     print("=" * 60)
 
     for port, details in findings.items():
-        print(f"\nPort: {port}")
-        print(f"Service: {details['service']}")
-        print(f"State: {details['state']}")
-        print(f"Observation: {details['observation']}")
+        print(f"\n[{port}]")
+        print(f"Service     : {details['service']}")
+        print(f"State       : {details['state']}")
+        print(f"Observation : {details['observation']}")
+
+    print("\n" + "=" * 60)
 
 
 def main():
-    findings = summarize_reconnaissance()
+    findings = get_reconnaissance_findings()
     display_findings(findings)
 
 
