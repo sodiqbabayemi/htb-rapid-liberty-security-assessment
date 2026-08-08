@@ -2,24 +2,16 @@
 Rapid Security Assessment
 Module 02: FTP Enumeration
 
-Purpose:
-    Structure and summarize FTP enumeration findings from an
-    authorized security assessment.
+This module records the FTP service identified during the
+assessment and summarizes the main configuration observations.
 
-Source:
-    Sanitized from the Rapid assessment documentation.
-
-Security Notice:
-    Target addresses, credentials, flags, private keys, and other
-    sensitive
-    engagement information have intentionally been removed.
+The public version has been sanitized. Target-specific
+information has been removed.
 """
 
 
-def ftp_service_profile():
-    """
-    Define the FTP service identified during reconnaissance.
-    """
+def get_ftp_service_profile():
+    """Return the FTP service information identified during assessment."""
 
     return {
         "port": 2121,
@@ -36,15 +28,14 @@ def ftp_service_profile():
 
 
 def assess_ftp_configuration(profile):
-    """
-    Identify security observations from the FTP configuration.
-    """
+    """Review the FTP profile and record relevant observations."""
 
     observations = []
 
     if profile["state"] == "open":
         observations.append(
-            "FTP service is externally reachable within the assessment scope."
+            "The FTP service was identified as open on port "
+            f"{profile['port']}."
         )
 
     if profile["anonymous_access"]:
@@ -56,17 +47,20 @@ def assess_ftp_configuration(profile):
 
 
 def display_report(profile, observations):
-    """Display a sanitized FTP enumeration summary."""
+    """Print the FTP enumeration results."""
 
-    print("=" * 60)
+    print("\n" + "=" * 60)
     print("RAPID SECURITY ASSESSMENT")
-    print("MODULE 02: FTP ENUMERATION")
+    print("MODULE 02 — FTP ENUMERATION")
     print("=" * 60)
 
-    print(f"\nService: {profile['protocol']}")
-    print(f"Port: {profile['port']}")
-    print(f"State: {profile['state']}")
-    print(f"Anonymous access: {profile['anonymous_access']}")
+    print(f"\nService            : {profile['protocol']}")
+    print(f"Port               : {profile['port']}")
+    print(f"State              : {profile['state']}")
+    print(
+        f"Anonymous access   : "
+        f"{profile['anonymous_access']}"
+    )
 
     print("\nAssessment focus:")
 
@@ -78,9 +72,11 @@ def display_report(profile, observations):
     for observation in observations:
         print(f"  - {observation}")
 
+    print("\n" + "=" * 60)
+
 
 def main():
-    profile = ftp_service_profile()
+    profile = get_ftp_service_profile()
     observations = assess_ftp_configuration(profile)
 
     display_report(profile, observations)
