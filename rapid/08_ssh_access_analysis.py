@@ -2,25 +2,18 @@
 Rapid Security Assessment
 Module 08: SSH Access Analysis
 
-Purpose:
-    Analyze the SSH access stage of an authorized security assessment
-    and document the security implications of credentials obtained
-    through the earlier attack chain.
+This module documents the SSH access stage of the Rapid
+assessment and the security implications of credentials
+obtained during the earlier assessment stage.
 
-Source:
-    Sanitized from the Rapid assessment documentation.
-
-Security Notice:
-    Target addresses, usernames, passwords, private keys, flags,
-    and exploitation commands have intentionally been excluded.
+The public version has been sanitized. Usernames, passwords,
+private keys, target addresses, flags, and exploitation commands
+have been removed.
 """
 
 
-def define_ssh_access():
-    """
-    Define the SSH service and access condition identified during
-    the assessment.
-    """
+def get_ssh_access():
+    """Return the SSH access condition recorded during assessment."""
 
     return {
         "service": "SSH",
@@ -31,48 +24,50 @@ def define_ssh_access():
     }
 
 
-def analyze_ssh_security(access):
-    """
-    Analyze the security implications of the SSH access condition.
-    """
+def assess_ssh_security(access):
+    """Review the SSH exposure and access condition."""
 
     findings = []
 
     if access["state"] == "open":
-        findings.append({
-            "finding": "SSH service exposed",
-            "severity": "Medium",
-            "impact": (
-                "An exposed SSH service increases the importance of "
-                "strong authentication, access restrictions, and monitoring."
-            ),
-            "recommendation": (
-                "Restrict SSH exposure to trusted networks where possible "
-                "and enforce strong authentication controls."
-            ),
-        })
+        findings.append(
+            {
+                "finding": "SSH service exposed",
+                "severity": "Medium",
+                "impact": (
+                    "An exposed SSH service makes strong authentication, "
+                    "access restrictions, and monitoring important."
+                ),
+                "recommendation": (
+                    "Restrict SSH exposure to trusted networks where "
+                    "possible and enforce strong authentication controls."
+                ),
+            }
+        )
 
-    if access["access_status"] == "Authenticated access obtained during assessment":
-        findings.append({
-            "finding": "Authenticated SSH access",
-            "severity": "High",
-            "impact": (
-                "Compromised credentials can provide legitimate remote "
-                "access to the host."
-            ),
-            "recommendation": (
-                "Rotate compromised credentials, enforce least privilege, "
-                "and review authentication and access logs."
-            ),
-        })
+    if access["access_status"] == (
+        "Authenticated access obtained during assessment"
+    ):
+        findings.append(
+            {
+                "finding": "Authenticated SSH access",
+                "severity": "High",
+                "impact": (
+                    "Compromised credentials can provide legitimate "
+                    "remote access to the host."
+                ),
+                "recommendation": (
+                    "Rotate compromised credentials, enforce least "
+                    "privilege, and review authentication logs."
+                ),
+            }
+        )
 
     return findings
 
 
-def identify_security_controls():
-    """
-    Define recommended controls for protecting SSH infrastructure.
-    """
+def get_ssh_security_controls():
+    """Return recommended controls for securing SSH."""
 
     return [
         "Use strong, unique credentials.",
@@ -84,53 +79,53 @@ def identify_security_controls():
         "Keep the SSH service and operating system patched.",
         "Monitor authentication attempts and successful logins.",
         "Implement appropriate brute-force protection.",
-        "Rotate credentials following a confirmed compromise.",
+        "Rotate credentials after a confirmed compromise.",
     ]
 
 
-def generate_report(access, findings, controls):
-    """
-    Generate a sanitized SSH security assessment report.
-    """
+def display_report(access, findings, controls):
+    """Print the SSH assessment results."""
 
-    print("=" * 70)
+    print("\n" + "=" * 70)
     print("RAPID SECURITY ASSESSMENT")
-    print("MODULE 08: SSH ACCESS ANALYSIS")
+    print("MODULE 08 — SSH ACCESS ANALYSIS")
     print("=" * 70)
 
-    print("\nSSH Service")
+    print("\nSSH service")
     print("-" * 70)
-    print(f"Service: {access['service']}")
-    print(f"Port: {access['port']}")
-    print(f"State: {access['state']}")
-    print(f"Authentication: {access['authentication_method']}")
-    print(f"Access status: {access['access_status']}")
+    print(f"Service             : {access['service']}")
+    print(f"Port                : {access['port']}")
+    print(f"State               : {access['state']}")
+    print(f"Authentication      : {access['authentication_method']}")
+    print(f"Access status       : {access['access_status']}")
 
-    print("\nSecurity Findings")
+    print("\nSecurity findings")
     print("-" * 70)
 
     for number, finding in enumerate(findings, start=1):
         print(f"\nFinding {number}: {finding['finding']}")
-        print(f"Severity: {finding['severity']}")
-        print(f"Impact: {finding['impact']}")
-        print(f"Recommendation: {finding['recommendation']}")
+        print(f"Severity       : {finding['severity']}")
+        print(f"Impact         : {finding['impact']}")
+        print(f"Recommendation : {finding['recommendation']}")
 
-    print("\nRecommended SSH Security Controls")
+    print("\nRecommended SSH security controls")
     print("-" * 70)
 
     for control in controls:
         print(f"- {control}")
 
+    print("\n" + "=" * 70)
+
 
 def main():
-    access = define_ssh_access()
-    findings = analyze_ssh_security(access)
-    controls = identify_security_controls()
+    access = get_ssh_access()
+    findings = assess_ssh_security(access)
+    controls = get_ssh_security_controls()
 
-    generate_report(
+    display_report(
         access,
         findings,
-        controls
+        controls,
     )
 
 
