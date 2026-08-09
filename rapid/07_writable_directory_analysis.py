@@ -2,23 +2,17 @@
 Rapid Security Assessment
 Module 07: Writable Directory Analysis
 
-Purpose:
-    Analyze the security implications of writable locations exposed
-    through an improperly restricted service.
+This module documents the writable-resource condition identified
+during the Rapid assessment.
 
-Source:
-    Sanitized from the Rapid Hack The Box assessment.
-
-Security Notice:
-    Target addresses, credentials, private keys, flags, sensitive
-    paths, and exploitation commands have intentionally been excluded.
+The public version has been sanitized. Target addresses,
+credentials, private keys, flags, sensitive paths, and
+exploitation commands have been removed.
 """
 
 
-def define_writable_location():
-    """
-    Define the writable-resource condition identified during assessment.
-    """
+def get_writable_location():
+    """Return the writable-resource condition recorded during assessment."""
 
     return {
         "service": "FTP",
@@ -30,108 +24,102 @@ def define_writable_location():
     }
 
 
-def analyze_write_risk(location):
-    """
-    Analyze the security implications of excessive write access.
-    """
+def assess_write_risk(location):
+    """Describe the risks associated with the writable location."""
 
     risks = []
 
     if location["write_capability"]:
-        risks.extend([
-            "Unauthorized users may be able to place files in the location.",
-            "Writable resources can increase the impact of a service compromise.",
-            "Unexpected files may be introduced into trusted directories.",
-            "File-write capability may enable chaining with other weaknesses.",
-            "Improper permissions can undermine filesystem integrity.",
-        ])
+        risks.extend(
+            [
+                "Unauthorized users may be able to place files in the location.",
+                "Writable resources can increase the impact of a service compromise.",
+                "Unexpected files may be introduced into trusted directories.",
+                "File-write capability may be chained with other weaknesses.",
+                "Improper permissions can weaken filesystem integrity.",
+            ]
+        )
 
     return risks
 
 
-def assess_security_boundaries(location):
-    """
-    Evaluate the security boundaries surrounding the writable resource.
-    """
+def review_security_boundaries():
+    """List the controls that should protect a writable resource."""
 
-    boundaries = {
-        "authentication": "Should be required where appropriate",
-        "directory_confinement": "Required",
-        "least_privilege": "Required",
-        "write_permissions": "Should be limited to necessary locations",
-        "file_integrity_monitoring": "Recommended",
+    return {
+        "Authentication": "Should be required where appropriate",
+        "Directory confinement": "Required",
+        "Least privilege": "Required",
+        "Write permissions": "Limited to necessary locations",
+        "File integrity monitoring": "Recommended",
     }
 
-    return boundaries
 
-
-def recommend_remediation():
-    """
-    Provide defensive recommendations for writable resources.
-    """
+def get_remediation_recommendations():
+    """Return recommended controls for the writable resource."""
 
     return [
         "Remove unnecessary write permissions.",
         "Apply least-privilege filesystem permissions.",
-        "Restrict writable directories to explicitly required locations.",
-        "Ensure service users cannot modify sensitive system resources.",
+        "Restrict writable directories to locations that actually require them.",
+        "Prevent service users from modifying sensitive system resources.",
         "Separate upload locations from executable or trusted directories.",
         "Review ownership and permissions of service-accessible directories.",
         "Monitor unexpected file creation and modification.",
         "Disable unnecessary anonymous write functionality.",
-        "Perform a permissions review after remediation.",
+        "Review permissions again after remediation.",
     ]
 
 
-def generate_report(location, risks, boundaries, recommendations):
-    """
-    Generate a sanitized writable-directory assessment report.
-    """
+def display_report(location, risks, boundaries, recommendations):
+    """Print the writable-directory assessment in a readable format."""
 
-    print("=" * 70)
+    print("\n" + "=" * 70)
     print("RAPID SECURITY ASSESSMENT")
-    print("MODULE 07: WRITABLE DIRECTORY ANALYSIS")
+    print("MODULE 07 — WRITABLE DIRECTORY ANALYSIS")
     print("=" * 70)
 
     print("\nResource")
     print("-" * 70)
-    print(f"Service: {location['service']}")
-    print(f"Port: {location['port']}")
-    print(f"Resource type: {location['resource_type']}")
-    print(f"Write capability: {location['write_capability']}")
-    print(f"Access control: {location['access_control']}")
-    print(f"Risk level: {location['risk_level']}")
+    print(f"Service          : {location['service']}")
+    print(f"Port             : {location['port']}")
+    print(f"Resource type    : {location['resource_type']}")
+    print(f"Write capability  : {location['write_capability']}")
+    print(f"Access control   : {location['access_control']}")
+    print(f"Risk level       : {location['risk_level']}")
 
-    print("\nSecurity Risks")
+    print("\nSecurity risks")
     print("-" * 70)
 
     for risk in risks:
         print(f"- {risk}")
 
-    print("\nSecurity Boundaries")
+    print("\nSecurity boundaries")
     print("-" * 70)
 
     for boundary, requirement in boundaries.items():
-        print(f"{boundary}: {requirement}")
+        print(f"{boundary:<24}: {requirement}")
 
-    print("\nRecommended Remediation")
+    print("\nRecommended remediation")
     print("-" * 70)
 
     for recommendation in recommendations:
         print(f"- {recommendation}")
 
+    print("\n" + "=" * 70)
+
 
 def main():
-    location = define_writable_location()
-    risks = analyze_write_risk(location)
-    boundaries = assess_security_boundaries(location)
-    recommendations = recommend_remediation()
+    location = get_writable_location()
+    risks = assess_write_risk(location)
+    boundaries = review_security_boundaries()
+    recommendations = get_remediation_recommendations()
 
-    generate_report(
+    display_report(
         location,
         risks,
         boundaries,
-        recommendations
+        recommendations,
     )
 
 
