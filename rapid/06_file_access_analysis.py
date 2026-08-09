@@ -2,24 +2,17 @@
 Rapid Security Assessment
 Module 06: File Access Analysis
 
-Purpose:
-    Analyze the security implications of unauthorized filesystem
-    access through an improperly restricted FTP service.
+This module documents the filesystem-access condition associated
+with the FTP service during the Rapid assessment.
 
-Source:
-    Sanitized from the Rapid Hack The Box assessment.
-
-Security Notice:
-    Target addresses, credentials, private keys, flags, sensitive
-    file paths, and exploitation commands have intentionally been
-    excluded.
+The public version has been sanitized. Target addresses,
+credentials, private keys, flags, sensitive file paths, and
+exploitation commands have been removed.
 """
 
 
-def define_file_access_condition():
-    """
-    Define the filesystem access condition observed during assessment.
-    """
+def get_file_access_condition():
+    """Return the filesystem-access condition recorded during assessment."""
 
     return {
         "service": "FTP",
@@ -31,52 +24,46 @@ def define_file_access_condition():
     }
 
 
-def analyze_file_access_risk(condition):
-    """
-    Analyze the potential consequences of excessive filesystem access.
-    """
+def assess_file_access_risk(condition):
+    """List the security risks associated with the access condition."""
 
     risks = []
 
     if not condition["directory_isolation"]:
-        risks.extend([
-            "The FTP service boundary may not adequately isolate users.",
-            "Resources outside the intended FTP directory may become accessible.",
-            "Sensitive files may be exposed to unauthorized users.",
-            "File modification may become possible where write permissions exist.",
-            "Filesystem access can increase the impact of other vulnerabilities.",
-        ])
+        risks.extend(
+            [
+                "The FTP service boundary may not adequately isolate users.",
+                "Resources outside the intended FTP directory may become accessible.",
+                "Sensitive files may be exposed to unauthorized users.",
+                "File modification may be possible where write permissions exist.",
+                "Filesystem access can increase the impact of other vulnerabilities.",
+            ]
+        )
 
     return risks
 
 
-def classify_access_types(condition):
-    """
-    Classify the types of filesystem interaction relevant to the finding.
-    """
+def classify_access_types():
+    """Describe the access types relevant to the assessment."""
 
-    access_types = {
-        "read_access": "Potentially exposed",
-        "write_access": "Dependent on filesystem permissions",
-        "execute_access": "Not assumed without additional evidence",
-        "directory_enumeration": "Potentially exposed",
+    return {
+        "Read access": "Potentially exposed",
+        "Write access": "Depends on filesystem permissions",
+        "Execute access": "Not assumed without additional evidence",
+        "Directory enumeration": "Potentially exposed",
     }
 
-    return access_types
 
-
-def recommend_file_access_controls():
-    """
-    Recommend controls to restrict filesystem access.
-    """
+def get_recommended_controls():
+    """Return the recommended filesystem-access controls."""
 
     return [
         "Confine the FTP service to its designated directory.",
-        "Prevent traversal outside the authorized directory.",
+        "Prevent access outside the authorized directory.",
         "Apply least-privilege filesystem permissions.",
         "Run the service with a dedicated low-privilege account.",
-        "Restrict write permissions to only required locations.",
-        "Separate sensitive system files from service-accessible storage.",
+        "Restrict write permissions to locations that actually require them.",
+        "Keep sensitive system files outside service-accessible storage.",
         "Monitor abnormal file-access activity.",
         "Review service-account permissions regularly.",
         "Disable unnecessary FTP functionality.",
@@ -84,55 +71,55 @@ def recommend_file_access_controls():
     ]
 
 
-def generate_report(condition, risks, access_types, controls):
-    """
-    Generate a sanitized file-access security report.
-    """
+def display_report(condition, risks, access_types, controls):
+    """Print the file-access assessment in a readable format."""
 
-    print("=" * 70)
+    print("\n" + "=" * 70)
     print("RAPID SECURITY ASSESSMENT")
-    print("MODULE 06: FILE ACCESS ANALYSIS")
+    print("MODULE 06 — FILE ACCESS ANALYSIS")
     print("=" * 70)
 
-    print("\nAssessment Condition")
+    print("\nAssessment condition")
     print("-" * 70)
-    print(f"Service: {condition['service']}")
-    print(f"Port: {condition['port']}")
-    print(f"Access control: {condition['access_control']}")
-    print(f"Directory isolation: {condition['directory_isolation']}")
+    print(f"Service              : {condition['service']}")
+    print(f"Port                 : {condition['port']}")
+    print(f"Access control       : {condition['access_control']}")
+    print(f"Directory isolation  : {condition['directory_isolation']}")
     print(f"Filesystem interaction: {condition['filesystem_interaction']}")
-    print(f"Risk level: {condition['risk_level']}")
+    print(f"Risk level           : {condition['risk_level']}")
 
-    print("\nPotential Security Risks")
+    print("\nPotential security risks")
     print("-" * 70)
 
     for risk in risks:
         print(f"- {risk}")
 
-    print("\nAccess Classification")
+    print("\nAccess classification")
     print("-" * 70)
 
     for access_type, status in access_types.items():
-        print(f"{access_type}: {status}")
+        print(f"{access_type:<24}: {status}")
 
-    print("\nRecommended Controls")
+    print("\nRecommended controls")
     print("-" * 70)
 
     for control in controls:
         print(f"- {control}")
 
+    print("\n" + "=" * 70)
+
 
 def main():
-    condition = define_file_access_condition()
-    risks = analyze_file_access_risk(condition)
-    access_types = classify_access_types(condition)
-    controls = recommend_file_access_controls()
+    condition = get_file_access_condition()
+    risks = assess_file_access_risk(condition)
+    access_types = classify_access_types()
+    controls = get_recommended_controls()
 
-    generate_report(
+    display_report(
         condition,
         risks,
         access_types,
-        controls
+        controls,
     )
 
 
