@@ -2,40 +2,31 @@
 Rapid Security Assessment
 Module 05: Path Traversal Analysis
 
-Purpose:
-    Analyze a suspected path traversal finding identified during an
-    authorized security assessment.
+This module documents the path traversal issue recorded during
+the Rapid assessment.
 
-This module is sanitized for public portfolio use.
-No client identifiers, credentials, target addresses, flags,
-private keys, or exploitation commands are included.
-
-Author: Sodiq Babayemi
+The public version has been sanitized. Target addresses,
+credentials, flags, private keys, and exploitation commands
+have been removed.
 """
 
 from dataclasses import dataclass
-from typing import List
 
 
 @dataclass
 class Finding:
-    """Represents a security finding identified during assessment."""
+    """Store the main details of a security finding."""
 
     title: str
     severity: str
     affected_service: str
     description: str
-    impact: List[str]
-    remediation: List[str]
+    impact: list[str]
+    remediation: list[str]
 
 
 def create_path_traversal_finding() -> Finding:
-    """
-    Create a sanitized representation of the path traversal finding.
-
-    The assessment identified a potential path traversal condition
-    associated with an exposed file-transfer service.
-    """
+    """Create the sanitized path traversal finding."""
 
     return Finding(
         title="Path Traversal Exposure",
@@ -43,35 +34,32 @@ def create_path_traversal_finding() -> Finding:
         affected_service="FTP Service",
         description=(
             "The assessment identified a potential path traversal "
-            "condition within an exposed file-transfer workflow. "
-            "Improper validation of file and directory references "
-            "could allow an authenticated or otherwise authorized "
-            "user to access files outside the intended directory."
+            "condition in the file-transfer service. Poor handling "
+            "of file and directory references could allow access "
+            "outside the intended FTP directory."
         ),
         impact=[
             "Unauthorized access to sensitive files",
             "Potential exposure of configuration information",
             "Possible disclosure of credentials or application secrets",
-            "Expansion of the attack surface through unintended file access",
-            "Potential support for further compromise if sensitive data is exposed",
+            "Access to files outside the intended service boundary",
+            "Possible support for further compromise if sensitive data is exposed",
         ],
         remediation=[
-            "Enforce strict server-side path validation.",
-            "Restrict file operations to approved directories.",
-            "Normalize and validate requested file paths before processing.",
+            "Enforce server-side path validation.",
+            "Limit file operations to approved directories.",
+            "Normalize and validate file paths before processing.",
             "Reject traversal sequences and unexpected path components.",
-            "Apply least-privilege permissions to service accounts.",
-            "Disable unnecessary file-transfer functionality.",
-            "Keep the FTP service and underlying operating system patched.",
-            "Monitor and review file-transfer audit logs.",
+            "Apply least-privilege permissions to the FTP service account.",
+            "Disable unnecessary FTP functionality.",
+            "Keep the FTP service and operating system patched.",
+            "Monitor and review FTP activity in the audit logs.",
         ],
     )
 
 
 def assess_risk(finding: Finding) -> str:
-    """
-    Provide a high-level risk assessment based on the finding severity.
-    """
+    """Return a simple risk-priority message."""
 
     risk_levels = {
         "Critical": "Immediate remediation required.",
@@ -82,45 +70,46 @@ def assess_risk(finding: Finding) -> str:
 
     return risk_levels.get(
         finding.severity,
-        "Review and classify according to the organization's risk methodology.",
+        "Review the finding using the organization's risk methodology.",
     )
 
 
-def generate_report(finding: Finding) -> None:
-    """Display a concise security assessment report."""
+def display_report(finding: Finding) -> None:
+    """Print the finding in a readable format."""
 
-    print("=" * 70)
+    print("\n" + "=" * 70)
     print("RAPID SECURITY ASSESSMENT")
-    print("MODULE 05: PATH TRAVERSAL ANALYSIS")
+    print("MODULE 05 — PATH TRAVERSAL ANALYSIS")
     print("=" * 70)
 
-    print(f"\nFinding: {finding.title}")
-    print(f"Severity: {finding.severity}")
-    print(f"Affected Service: {finding.affected_service}")
+    print(f"\nFinding          : {finding.title}")
+    print(f"Severity         : {finding.severity}")
+    print(f"Affected service : {finding.affected_service}")
 
     print("\nDescription")
     print("-" * 70)
     print(finding.description)
 
-    print("\nPotential Impact")
+    print("\nPotential impact")
     print("-" * 70)
 
-    for index, impact in enumerate(finding.impact, start=1):
-        print(f"{index}. {impact}")
+    for number, impact in enumerate(finding.impact, start=1):
+        print(f"{number}. {impact}")
 
-    print("\nRisk Assessment")
+    print("\nRisk assessment")
     print("-" * 70)
     print(assess_risk(finding))
 
-    print("\nRecommended Remediation")
+    print("\nRecommended remediation")
     print("-" * 70)
 
-    for index, recommendation in enumerate(
-        finding.remediation, start=1
+    for number, recommendation in enumerate(
+        finding.remediation,
+        start=1,
     ):
-        print(f"{index}. {recommendation}")
+        print(f"{number}. {recommendation}")
 
-    print("\nAssessment Status")
+    print("\nAssessment status")
     print("-" * 70)
     print("Finding documented for remediation and validation.")
 
@@ -128,10 +117,8 @@ def generate_report(finding: Finding) -> None:
 
 
 def main() -> None:
-    """Main execution function."""
-
     finding = create_path_traversal_finding()
-    generate_report(finding)
+    display_report(finding)
 
 
 if __name__ == "__main__":
