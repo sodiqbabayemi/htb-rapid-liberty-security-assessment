@@ -2,56 +2,49 @@
 Rapid Security Assessment
 Module 12: Privilege Escalation Analysis
 
-Purpose:
-    Analyze the local privilege-escalation exposure identified during
-    an authorized laboratory security assessment.
+This module documents the local privilege-escalation exposure
+identified during the Rapid assessment and shows how it fits
+into the wider attack chain.
 
-Source:
-    Sanitized from the Rapid Hack The Box assessment.
-
-Security Notice:
-    Target addresses, credentials, private keys, flags, payloads,
-    and exploitation commands have intentionally been excluded.
+The public version has been sanitized. Target addresses,
+credentials, private keys, flags, payloads, and exploitation
+commands have been removed.
 """
 
 
-def define_privilege_escalation_finding():
-    """
-    Define the privilege-escalation finding documented in the assessment.
-    """
+def get_privilege_escalation_finding():
+    """Return the privilege-escalation finding recorded during assessment."""
 
     return {
-        "operating_system": "Ubuntu 18.04",
-        "vulnerability": "CVE-2021-4034",
-        "common_name": "PwnKit",
-        "category": "Local Privilege Escalation",
-        "severity": "Critical",
-        "status": "Applicable exposure identified during assessment",
+        "Operating system": "Ubuntu 18.04",
+        "Vulnerability": "CVE-2021-4034",
+        "Common name": "PwnKit",
+        "Category": "Local Privilege Escalation",
+        "Severity": "Critical",
+        "Status": "Applicable exposure identified during assessment",
     }
 
 
-def analyze_privilege_escalation_risk(finding):
-    """
-    Analyze the security impact of the identified local vulnerability.
-    """
+def assess_privilege_escalation_risk(finding):
+    """Describe the potential impact of the identified vulnerability."""
 
     risks = []
 
-    if finding["category"] == "Local Privilege Escalation":
-        risks.extend([
-            "A local authenticated user may potentially escalate privileges.",
-            "Successful exploitation can undermine operating-system security boundaries.",
-            "Privilege escalation can convert limited host access into administrative control.",
-            "A compromised low-privilege account can therefore have significantly greater impact.",
-        ])
+    if finding["Category"] == "Local Privilege Escalation":
+        risks.extend(
+            [
+                "A local authenticated user may potentially escalate privileges.",
+                "Successful exploitation can undermine operating-system security boundaries.",
+                "Privilege escalation can turn limited host access into administrative control.",
+                "A compromised low-privilege account can therefore have significantly greater impact.",
+            ]
+        )
 
     return risks
 
 
-def assess_attack_chain_impact():
-    """
-    Describe how privilege escalation affected the overall assessment.
-    """
+def get_attack_chain():
+    """Return the assessment stages that led to the final finding."""
 
     return [
         "External service exposure",
@@ -66,10 +59,8 @@ def assess_attack_chain_impact():
     ]
 
 
-def recommend_remediation():
-    """
-    Provide defensive recommendations for the identified exposure.
-    """
+def get_remediation_recommendations():
+    """Return defensive recommendations for the identified exposure."""
 
     return [
         "Apply supported operating-system security updates.",
@@ -84,52 +75,52 @@ def recommend_remediation():
     ]
 
 
-def generate_report(finding, risks, attack_chain, recommendations):
-    """
-    Generate a sanitized privilege-escalation assessment report.
-    """
+def display_report(finding, risks, attack_chain, recommendations):
+    """Print the privilege-escalation assessment."""
 
-    print("=" * 70)
+    print("\n" + "=" * 70)
     print("RAPID SECURITY ASSESSMENT")
-    print("MODULE 12: PRIVILEGE ESCALATION ANALYSIS")
+    print("MODULE 12 — PRIVILEGE ESCALATION ANALYSIS")
     print("=" * 70)
 
-    print("\nPrivilege Escalation Finding")
+    print("\nPrivilege-escalation finding")
     print("-" * 70)
 
     for key, value in finding.items():
-        print(f"{key}: {value}")
+        print(f"{key:<20}: {value}")
 
-    print("\nSecurity Impact")
+    print("\nSecurity impact")
     print("-" * 70)
 
     for risk in risks:
         print(f"- {risk}")
 
-    print("\nAttack Chain Context")
+    print("\nAttack-chain context")
     print("-" * 70)
 
     for number, step in enumerate(attack_chain, start=1):
         print(f"{number}. {step}")
 
-    print("\nRecommended Remediation")
+    print("\nRecommended remediation")
     print("-" * 70)
 
     for recommendation in recommendations:
         print(f"- {recommendation}")
 
+    print("\n" + "=" * 70)
+
 
 def main():
-    finding = define_privilege_escalation_finding()
-    risks = analyze_privilege_escalation_risk(finding)
-    attack_chain = assess_attack_chain_impact()
-    recommendations = recommend_remediation()
+    finding = get_privilege_escalation_finding()
+    risks = assess_privilege_escalation_risk(finding)
+    attack_chain = get_attack_chain()
+    recommendations = get_remediation_recommendations()
 
-    generate_report(
+    display_report(
         finding,
         risks,
         attack_chain,
-        recommendations
+        recommendations,
     )
 
 
